@@ -17,8 +17,21 @@
     let currentNum = 0;
     let score = 0;
 
-    
-    
+    function displayFinal() {
+        if (currentNum === todos.length - 1) {
+            ul.textContent = '';
+            number.textContent = `あなたの正解数は${score}です`;
+            question.textContent = '再度挑戦したい場合は以下をクリック';
+            const btn = document.createElement('button');
+            btn.textContent = 'homeに戻る';
+            ul.appendChild(btn);
+            btn.addEventListener('click', () => {
+                currentNum = 0;
+                displayQuestion();
+            })
+        }
+    }
+
     function checkAnswer(li) {
         if(li.textContent === todos[currentNum].c[0]) {
             score++;
@@ -41,124 +54,36 @@
                 currentNum++;
                 displayQuestion();
                 checkAnswer(li);
+                displayFinal();
             })
         })
-        if (currentNum === todos.length - 1) {
-            ul.textContent = '';
-            number.textContent = `あなたの正解数は${score}です`;
-            question.textContent = '再度挑戦したい場合は以下をクリック';
-            const btn = document.createElement('button');
-            btn.textContent = 'homeに戻る';
-            ul.appendChild(btn);
-            btn.addEventListener('click', () => {
-                currentNum = 0;
-                displayQuestion();
-            })
-        }
     }
 
     displayQuestion();
 
+    async function callApi() {
+        const res = await fetch('https://opentdb.com/api.php?amount=10');
+        const users = await res.json();
+        console.log(users);
+    }
+
+    callApi();
+    
+    
+
+    
+
+
     
         
 
 
 
 
-    // })
+   
+ 
 
-    // const ul = document.querySelector('ul');
-    // const question = document.getElementById('question');
-    // question.textContent = '問題';
-    // const selections = document.querySelectorAll('ul > li');
-    // console.log(selections);
-    // selections.forEach(select => {
-    //     select.addEventListener('click', () => {
-    //         select.textContent = '達磨';
-    //     })
-        
-    // });
-
-    // var obj = ['pon-poko', 'kon-kon', 'nyan-nyan' ];
-    // var obj = { tanuki:'pon-poko', kitsune:'kon-kon', neko:'nyan-nyan' };
-    // Object.keys(obj).forEach(item => {
-    //     console.log(item);
-    // });
-
-
-    
-
-    
-        // const res = await fetch('https://opentdb.com/api.php?amount=10');
-        // const users = await res.json();
-        // console.log(users);
-        // // users.forEach(user => {
-        // //     console.log(user);
-        // // });
-    
-    // async function callApi() {
-    //     const res = await fetch('https://opentdb.com/api.php?amount=10');
-    //     const users = await res.json();
-    //     // console.log(users);
-    //     for(let i = 0; i === users.length; i++) {
-    //         const user = users[i];
-    //         console.log(user);
-    //     }
-    //     // Object.keys(users).forEach(user =>{
-    //     //     console.log(user);
-    //     // });
-    //     // console.log(users[0].type);
-    //     // users.forEach(user =>{
-    //     //     console.log(user);
-    //     // });
-    // }
-
-    // let url = 'https://opentdb.com/api.php?amount=10';
-
-    const img = document.getElementById(image);
-    const  url = 'https://dog.ceo/api/breeds/image/random';
-    const options = {
-        method: 'GET'
-    };
-
-    // const fetchTest = fetch(url, options);
-    // console.log(fetchTest);
-
-    // const fetchTest2 = fetch(url, options)
-    // .then( response => response.json());
-    // console.log(fetchTest2.message);
-
-    function getDogImage(url, options) {
-        return fetch(url, options)
-        .then(response => response.json());
-    }
-
-    async function getImage(url, options) {
-      const response = await getDogImage(url, options);
-      console.log(response.message);
-      const image = document.createElement('img');
-      image.src = response.message;
-      img.appendChild(image);
-    }
-
-    getImage(url, options);
-
-
-
-    // fetch(url)
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         console.log(data);
-    //     });
-
-    
-
-
-
-    
-
-    // callApi();
-
+   
 
 }
 
